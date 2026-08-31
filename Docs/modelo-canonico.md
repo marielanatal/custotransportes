@@ -112,7 +112,7 @@ não são repetidas nas definições abaixo:
 | `tenant_id` | `TEXT` | não | `REFERENCES tenant(tenant_id)` |
 | `origem_sistema` | `TEXT` | não | Rótulo do adaptador que produziu a linha |
 | `origem_id` | `TEXT` | não | Identificador opaco na origem |
-| `carga_id` | `BIGINT` | sim | `REFERENCES carga_ingestao(id)` |
+| `carga_id` | `BIGINT` | sim | `REFERENCES carga_ingestao (tenant_id, id)`, composta |
 | `ingerido_em` | `TIMESTAMPTZ` | não | `DEFAULT now()` |
 
 Restrição obrigatória em todas: `UNIQUE (tenant_id, origem_sistema, origem_id)`.
@@ -310,7 +310,7 @@ Base operacional. Unidade de calibração e de responsabilização.
 | `nome` | `TEXT` | não | |
 | `tipo` | `TEXT` | não | `CHECK IN ('matriz','filial','ponto_apoio')` |
 | `cidade` | `TEXT` | sim | |
-| `uf` | `CHAR(2)` | sim | |
+| `uf` | `TEXT` | sim | UF, `CHECK (~ '^[A-Z]{2}$')` |
 | `ativo` | `BOOLEAN` | não | `DEFAULT true` |
 
 ### `perfil_veiculo`
@@ -386,7 +386,7 @@ da rota, no período".
 | `codigo` | `TEXT` | não | `UNIQUE (tenant_id, codigo)` |
 | `origem_unidade_id` | `BIGINT` | sim | |
 | `destino_cidade` | `TEXT` | sim | |
-| `destino_uf` | `CHAR(2)` | sim | |
+| `destino_uf` | `TEXT` | sim | UF, `CHECK (~ '^[A-Z]{2}$')` |
 | `tipo` | `TEXT` | não | `CHECK IN ('transferencia','distribuicao','coleta','dedicado')` |
 
 Muitas origens não têm conceito de rota. Nesse caso o adaptador deriva a rota do par
@@ -488,9 +488,9 @@ Documento fiscal de transporte.
 | `valor_mercadoria` | `NUMERIC(14,2)` | sim | |
 | `peso_kg` | `NUMERIC(12,3)` | sim | |
 | `origem_cidade` | `TEXT` | sim | |
-| `origem_uf` | `CHAR(2)` | sim | |
+| `origem_uf` | `TEXT` | sim | UF, `CHECK (~ '^[A-Z]{2}$')` |
 | `destino_cidade` | `TEXT` | sim | |
-| `destino_uf` | `CHAR(2)` | sim | |
+| `destino_uf` | `TEXT` | sim | UF, `CHECK (~ '^[A-Z]{2}$')` |
 | `status` | `TEXT` | não | `CHECK IN ('emitido','em_transporte','entregue','cancelado')` |
 | `cancelado_em` | `TIMESTAMPTZ` | sim | |
 
