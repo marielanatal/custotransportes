@@ -14,6 +14,10 @@ services:
       - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      # O DDL entra como volume só-leitura em vez de ser mandado pela entrada
+      # padrão: PowerShell não faz redirecionamento com "<", e assim o mesmo
+      # comando funciona em PowerShell, bash e cmd.
+      - ./src/canonico:/sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-custo} -d ${POSTGRES_DB:-custotransportes}"]
       interval: 5s
