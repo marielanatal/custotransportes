@@ -1,0 +1,65 @@
+# ---------------------------------------------------------------------------
+# Rede de segurança da regra inviolável nº 1: nenhum dado real, nunca.
+#
+# Planilha e export não entram neste repositório em diretório nenhum. Se um
+# arquivo desses aparecer aqui, ou é dado de transportadora — que não pode
+# existir — ou é dataset sintético, que se gera por código e não se versiona.
+#
+# A exceção é tests/fixtures/, para caso plantado pequeno e legível, sempre
+# gerado por nós. Se você precisar forçar um arquivo para fora dessa exceção,
+# pare e pergunte por quê antes de usar `git add -f`.
+# ---------------------------------------------------------------------------
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+*.tsv
+*.parquet
+*.dump
+*.bak
+!tests/fixtures/**/*.csv
+
+# Dataset sintético gerado. O gerador é versionado; a saída dele não.
+data/gerado/
+data/saida/
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# Ferramentas
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Postgres em Docker — volume local
+.docker/pgdata/
+pgdata/
+
+# Editor e sistema operacional
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
